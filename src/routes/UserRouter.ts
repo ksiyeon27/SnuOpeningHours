@@ -6,6 +6,6 @@ const router: Router = Router();
 
 router.post("/", [body("email").isEmail()], UserController.createUser);
 router.post("/signin", [], UserController.signinUser);
-router.get("/:userId", auth, UserController.findUserById);
+router.get("/", auth, UserController.getUser);
 
 export default router;

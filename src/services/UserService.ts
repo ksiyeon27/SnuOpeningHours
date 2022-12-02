@@ -47,12 +47,16 @@ const signInUser = async (userSignInDto: UserSignInDto): Promise<PostBaseRespons
   }
 };
 
-const findUserById = async (userId: string): Promise<UserResponseDto | null> => {
-  return null;
+const getUser = async (userId: string): Promise<UserResponseDto | null> => {
+  const user = await User.findById(userId);
+  if (!user) {
+    return null;
+  }
+  return user;
 };
 
 export default {
   createUser,
   signInUser,
-  findUserById,
+  getUser,
 };

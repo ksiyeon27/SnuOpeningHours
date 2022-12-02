@@ -15,6 +15,7 @@ const message = {
   EXPIRED_TOKEN: "만료된 토큰입니다.",
 
   CREATE_USER_SUCCESS: "유저 회원가입 성공",
+  READ_USER_SUCCESS: "유저 정보 조회 성공",
 };
 
 export default message;
