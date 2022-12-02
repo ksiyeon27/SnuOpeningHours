@@ -6,6 +6,8 @@ import { validationResult } from "express-validator";
 import { UserCreateDto } from "../interfaces/user/UserCreateDto";
 import { UserService } from "../services";
 import jwtHandler from "../modules/jwtHandler";
+import { PostBaseResponseDto } from "../interfaces/common/PostBaseResponseDto";
+import { UserSignInDto } from "../interfaces/user/UserSigninDto";
 
 /**
  *  @route POST /user
@@ -40,7 +42,33 @@ const createUser = async (req: Request, res: Response) => {
  *  @desc Signin User(Login)
  *  @access Public
  */
-const signinUser = async (req: Request, res: Response) => {};
+const signinUser = async (req: Request, res: Response) => {
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.BAD_REQUEST));
+  }
+
+  const userSigninDto: UserSignInDto = req.body;
+  try {
+    const result = await UserService.signInUser(userSigninDto);
+    if (!result) {
+      return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+    }
+    if (result === 401) {
+      return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.INVALID_PASSWORD));
+    }
+
+    const accessToken = jwtHandler.getAccessToken((result as PostBaseResponseDto)._id);
+    const data = {
+      _id: (result as PostBaseResponseDto)._id,
+      accessToken,
+    };
+    res.status(statusCode.OK).send(util.success(statusCode.OK, message.SIGNIN_USER_SUCCESS, data));
+  } catch (err) {
+    console.log(err);
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  }
+};
 
 /**
  *  @route GET /user/:userId

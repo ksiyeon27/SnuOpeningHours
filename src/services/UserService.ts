@@ -28,7 +28,23 @@ const createUser = async (UserCreateDto: UserCreateDto): Promise<PostBaseRespons
 };
 
 const signInUser = async (userSignInDto: UserSignInDto): Promise<PostBaseResponseDto | null | number> => {
-  return null;
+  try {
+    const user = await User.findOne({
+      email: userSignInDto.email,
+    });
+    if (!user) return null;
+
+    const isMatch = await bcrypt.compare(userSignInDto.password, user.password);
+    if (!isMatch) return 401;
+
+    const data = {
+      _id: user._id,
+    };
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };
 
 const findUserById = async (userId: string): Promise<UserResponseDto | null> => {
