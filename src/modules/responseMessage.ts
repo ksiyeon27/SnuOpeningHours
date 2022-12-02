@@ -11,6 +11,10 @@ const message = {
   INVALID_TOKEN: "토큰 만료",
   INVALID_PASSWORD: "비밀번호 오류",
   SIGNIN_USER_SUCCESS: "로그인 성공",
+  NO_USER: "존재하지 않는 유저",
+  EXPIRED_TOKEN: "만료된 토큰입니다.",
+
+  CREATE_USER_SUCCESS: "유저 회원가입 성공",
 };
 
 export default message;
