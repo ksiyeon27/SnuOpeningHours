@@ -26,6 +26,28 @@ const getPlace = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ *  @route GET /place/category/:categoryId
+ *  @desc Get Places by category
+ *  @access Public
+ */
+
+const getPlacesByCategory = async (req: Request, res: Response) => {
+  const { categoryId } = req.params;
+
+  try {
+    const data = await PlaceService.getPlacesByCategory(categoryId);
+    if (!data) {
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.READ_CATEGORY_PLACES_FAIL));
+    }
+
+    return res.status(statusCode.OK).send(util.success(statusCode.OK, message.READ_CATEGORY_PLACES_SUCCESS, data));
+  } catch (err) {
+    console.log(err);
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  }
+};
+
 /* 내부 사용 */
 const createPlace = async (req: Request, res: Response) => {
   const placeCreateDto: PlaceInfo = req.body;
@@ -40,4 +62,4 @@ const createPlace = async (req: Request, res: Response) => {
   }
 };
 
-export default { getPlace, createPlace };
+export default { getPlace, getPlacesByCategory, createPlace };
