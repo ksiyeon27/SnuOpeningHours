@@ -16,6 +16,9 @@ const message = {
 
   CREATE_USER_SUCCESS: "유저 회원가입 성공",
   READ_USER_SUCCESS: "유저 정보 조회 성공",
+
+  /* place */
+  READ_PLACE_SUCCESS: "장소 조회 성공",
 };
 
 export default message;
