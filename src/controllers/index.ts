@@ -1,2 +1,4 @@
 import UserController from "./UserController";
-export { UserController };
+import PlaceController from "./PlaceController";
+
+export { UserController, PlaceController };

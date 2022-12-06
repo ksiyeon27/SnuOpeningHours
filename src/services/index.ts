@@ -1,2 +1,3 @@
 import UserService from "./UserService";
-export { UserService };
+import PlaceService from "./PlaceService";
+export { UserService, PlaceService };
