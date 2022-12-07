@@ -25,6 +25,7 @@ const message = {
 
   /* report */
   CREATE_REPORT_SUCCESS: "장소 제보 성공",
+  READ_REPORT_SUCCESS: "제보 조회 성공",
 };
 
 export default message;
