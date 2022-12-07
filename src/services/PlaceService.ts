@@ -36,6 +36,47 @@ const getPlacesByCategory = async (categoryId: string): Promise<PlaceListRespons
       placeList.map((place) => {
         const result = {
           _id: place._id,
+          category: place.category,
+          name: place.name,
+          location: place.location,
+          isClosed: place.isClosed,
+          dayOff: place.dayOff,
+          openTime: place.openTime,
+          closeTime: place.closeTime,
+        };
+        count++;
+        return result;
+      })
+    );
+
+    const data: PlaceListResponseDto = {
+      placesCount: count,
+      places: places,
+    };
+
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const getPlacesBySearch = async (keyword: string): Promise<PlaceListResponseDto | null> => {
+  const regex = (pattern: string) => new RegExp(`.*${pattern}.*`);
+
+  try {
+    const Regex: RegExp = regex(keyword);
+    const placeList = await Place.find({
+      $or: [{ name: { $regex: Regex } }, { location: { $regex: Regex } }],
+    });
+
+    let count = 0;
+
+    const places: PlaceListInfo[] = await Promise.all(
+      placeList.map((place: any) => {
+        const result = {
+          _id: place._id,
+          category: place.category,
           name: place.name,
           location: place.location,
           isClosed: place.isClosed,
@@ -75,4 +116,4 @@ const createPlace = async (placeCreateDto: PlaceInfo): Promise<PostBaseResponseD
   }
 };
 
-export default { getPlace, getPlacesByCategory, createPlace };
+export default { getPlace, getPlacesByCategory, getPlacesBySearch, createPlace };

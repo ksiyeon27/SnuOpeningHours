@@ -4,6 +4,7 @@ import { PlaceController } from "../controllers";
 
 const router: Router = Router();
 
+router.get("/search", PlaceController.getPlacesBySearch);
 router.get("/:placeId", PlaceController.getPlace);
 router.get("/category/:categoryId", PlaceController.getPlacesByCategory);
 router.post("/", PlaceController.createPlace);
