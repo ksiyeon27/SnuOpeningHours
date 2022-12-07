@@ -1,5 +1,5 @@
 import UserController from "./UserController";
 import PlaceController from "./PlaceController";
-import Reportcontroller from "./Reportcontroller";
+import ReportController from "./ReportController";
 
-export { UserController, PlaceController, Reportcontroller };
+export { UserController, PlaceController, ReportController };
