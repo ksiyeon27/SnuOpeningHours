@@ -40,3 +40,5 @@ app
     console.error(err);
     process.exit(1);
   });
+
+app.set("view engine", "ejs");
