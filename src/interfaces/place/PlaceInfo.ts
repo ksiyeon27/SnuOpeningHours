@@ -10,6 +10,7 @@ export interface PlaceInfo {
 }
 export interface PlaceListInfo {
   name: string;
+  category: number;
   location: string;
   isClosed: boolean;
   dayOff: number[];

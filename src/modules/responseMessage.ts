@@ -21,6 +21,7 @@ const message = {
   READ_PLACE_SUCCESS: "장소 조회 성공",
   READ_CATEGORY_PLACES_FAIL: "카테고리별 장소 리스트 조회 실패",
   READ_CATEGORY_PLACES_SUCCESS: "카테고리별 장소 리스트 조회 성공",
+  SEARCH_PLACE_SUCCESS: "장소 검색 성공",
 };
 
 export default message;
