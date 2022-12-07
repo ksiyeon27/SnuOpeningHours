@@ -1,9 +1,12 @@
 import { PostBaseResponseDto } from "../interfaces/common/PostBaseResponseDto";
 import Report from "../models/Report";
+import User from "../models/User";
 import { ReportCreateDto } from "../interfaces/report/ReportCreateDto";
 import { ReportResponseDto } from "../interfaces/report/ReportResponseDto";
 import { PlaceInReportDto } from "../interfaces/place/PlaceInReportDto";
 import { UserResponseDto } from "../interfaces/user/UserResponseDto";
+import { ReportListResponseDto } from "../interfaces/report/ReportListResponseDto";
+import { ReportInfo } from "../interfaces/report/ReportInfo";
 
 const getReport = async (reportId: string): Promise<ReportResponseDto | null> => {
   try {
@@ -53,4 +56,36 @@ const createReport = async (reportCreateDto: ReportCreateDto): Promise<PostBaseR
   }
 };
 
-export default { getReport, createReport };
+const getUserReportList = async (userId: string): Promise<ReportListResponseDto | null> => {
+  try {
+    let reportList;
+    reportList = await Report.find({ writer: userId });
+
+    let count = 0;
+    const reports: ReportInfo[] = await Promise.all(
+      reportList.map((report) => {
+        // const result = {
+        //   _id: report._id,
+        //   writer: report.writer,
+        //   place: report.place,
+        //   content: report.content,
+        // };
+        count++;
+        return report;
+        // return result;
+      })
+    );
+
+    const data: ReportListResponseDto = {
+      reportsCount: count,
+      reports: reports,
+    };
+
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export default { getReport, createReport, getUserReportList };
