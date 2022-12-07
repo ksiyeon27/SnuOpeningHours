@@ -1,4 +1,7 @@
+import mongoose from "mongoose";
+
 export interface PlaceInfo {
+  _id: mongoose.Schema.Types.ObjectId;
   name: string;
   category: number; //
   description: string; //

@@ -6,6 +6,28 @@ import { ReportCreateDto } from "../interfaces/report/ReportCreateDto";
 import ReportService from "../services/ReportService";
 
 /**
+ *  @route GET /report/:reportId
+ *  @desc Get Report
+ *  @access Public
+ */
+const getReport = async (req: Request, res: Response) => {
+  const { reportId } = req.params;
+
+  try {
+    const data = await ReportService.getReport(reportId);
+
+    if (!data) {
+      return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+    }
+
+    return res.status(statusCode.OK).send(util.success(statusCode.OK, message.READ_REPORT_SUCCESS, data));
+  } catch (err) {
+    console.log(err);
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  }
+};
+
+/**
  * @route POST /report
  * @desc Create Report
  * @access Public
@@ -28,4 +50,4 @@ const createReport = async (req: Request, res: Response) => {
   }
 };
 
-export default { createReport };
+export default { getReport, createReport };
