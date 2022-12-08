@@ -15,11 +15,11 @@ import { UserSignInDto } from "../interfaces/user/UserSigninDto";
  *  @access Public
  */
 const createUser = async (req: Request, res: Response) => {
-  const error = validationResult(req);
-  if (!error.isEmpty()) {
-    return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.BAD_REQUEST));
-  }
+  // req.body.email = req.body.email as string;
+  // req.body.username = req.body.username as string;
+  // req.body.password = req.body.password as string;
   const userCreateDto: UserCreateDto = req.body;
+  console.log(userCreateDto);
   try {
     const result = await UserService.createUser(userCreateDto);
     if (!result) return res.status(statusCode.CONFLICT).send(util.fail(statusCode.CONFLICT, message.EMAIL_DUPLICATED));
@@ -49,6 +49,7 @@ const signinUser = async (req: Request, res: Response) => {
   }
 
   const userSigninDto: UserSignInDto = req.body;
+  //console.log(userSigninDto);
   try {
     const result = await UserService.signInUser(userSigninDto);
     if (!result) {
@@ -63,6 +64,7 @@ const signinUser = async (req: Request, res: Response) => {
       _id: (result as PostBaseResponseDto)._id,
       accessToken,
     };
+    console.log(data);
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.SIGNIN_USER_SUCCESS, data));
   } catch (err) {
     console.log(err);

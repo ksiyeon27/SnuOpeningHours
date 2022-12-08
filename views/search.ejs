@@ -1,0 +1,46 @@
+<div>
+    <h1>search</h1>
+    <a href="/">home</a>
+    <div class="s006">
+      <form>
+        <fieldset>
+          <legend>What are you looking for?</legend>
+          <div class="inner-form">
+            <div class="input-field">
+              <form action="/place/search" method="GET">
+                <input name="keyword" id="search" type="text" placeholder="검색어를 입력하세요" value="" />
+                <input class="btn-search" type="submit"></input>
+              </form>
+            </div>
+          </div>
+          <div class="suggestion-wrap">
+            <span>감골식당</span>
+            <span>투썸</span>
+            <span>우체국</span>
+          </div>
+        </fieldset>
+      </form>
+
+    </div>
+</div>
+<% if (data.placesCount > 0) { %>
+    <div><%= data.placesCount %> 개의 검색 결과가 있습니다. </div>
+<% }else{ %>
+        <div>검색 결과 없음</div>
+<% } %> 
+<% if (data) { %>
+    <% for(var i = 0; i < data.placesCount ; i++){ %> 
+    <div><a href="/place/<%= data.places[i]._id %>">상세보기</a></div>
+    <div><%= data.places[i].category %></div>
+    <div><%= data.places[i].name %></div>
+    <div><%= data.places[i].location %></div>
+    <div><%= data.places[i].isClosed %></div>
+    <div><%= data.places[i].dayOff %></div>
+    <div><%= data.places[i].openTime %></div>
+    <div><%= data.places[i].closeTime %></div>
+    <% } %>
+<% }else{ %>
+    <div>aa</div>
+<% } %>
+
+

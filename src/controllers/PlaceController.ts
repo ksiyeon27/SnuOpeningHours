@@ -19,6 +19,7 @@ const getPlace = async (req: Request, res: Response) => {
       return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
     }
 
+    return res.render("place", { data: data });
     return res.status(statusCode.OK).send(util.success(statusCode.OK, message.READ_PLACE_SUCCESS, data));
   } catch (err) {
     console.log(err);
@@ -40,7 +41,7 @@ const getPlacesByCategory = async (req: Request, res: Response) => {
     if (!data) {
       return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.READ_CATEGORY_PLACES_FAIL));
     }
-
+    return res.render("category", { data: data });
     return res.status(statusCode.OK).send(util.success(statusCode.OK, message.READ_CATEGORY_PLACES_SUCCESS, data));
   } catch (err) {
     console.log(err);
@@ -56,15 +57,12 @@ const getPlacesByCategory = async (req: Request, res: Response) => {
 const getPlacesBySearch = async (req: Request, res: Response) => {
   const { keyword } = req.query;
 
-  if (keyword === " " || keyword === "") {
-    return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.BAD_REQUEST));
-  }
   try {
     const data = await PlaceService.getPlacesBySearch(keyword as string);
     if (!data) {
       return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
     }
-
+    return res.render("search", { data: data });
     return res.status(statusCode.OK).send(util.success(statusCode.OK, message.SEARCH_PLACE_SUCCESS, data));
   } catch (err) {
     console.log(err);
