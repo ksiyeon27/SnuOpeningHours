@@ -49,7 +49,7 @@ const signinUser = async (req: Request, res: Response) => {
   }
 
   const userSigninDto: UserSignInDto = req.body;
-  console.log(userSigninDto);
+  //console.log(userSigninDto);
   try {
     const result = await UserService.signInUser(userSigninDto);
     if (!result) {
@@ -64,6 +64,7 @@ const signinUser = async (req: Request, res: Response) => {
       _id: (result as PostBaseResponseDto)._id,
       accessToken,
     };
+    console.log(data);
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.SIGNIN_USER_SUCCESS, data));
   } catch (err) {
     console.log(err);
