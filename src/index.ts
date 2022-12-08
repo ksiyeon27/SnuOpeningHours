@@ -3,12 +3,15 @@ import config from "./config";
 const app = express();
 import connectDB from "./loaders/db";
 import routes from "./routes";
+var cookieParser = require("cookie-parser");
+
 require("dotenv").config();
 
 connectDB(); //몽고디비에 연결
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser);
 
 app.use(routes); //라우터
 // error handler

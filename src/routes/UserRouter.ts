@@ -5,11 +5,11 @@ import auth from "../middleware/auth";
 const router: Router = Router();
 
 router.get("/signup", function (req, res) {
-  res.render("signup");
+  res.render("signup", { isLogin: false });
 });
 router.post("/signup", [], UserController.createUser);
 router.get("/signin", function (req, res) {
-  res.render("login");
+  res.render("login"), { isLogin: false };
 });
 router.post("/signin", UserController.signinUser);
 router.get("/", auth, UserController.getUser);

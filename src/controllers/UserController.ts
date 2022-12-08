@@ -22,14 +22,17 @@ const createUser = async (req: Request, res: Response) => {
   console.log(userCreateDto);
   try {
     const result = await UserService.createUser(userCreateDto);
-    if (!result) return res.status(statusCode.CONFLICT).send(util.fail(statusCode.CONFLICT, message.EMAIL_DUPLICATED));
-
+    if (!result) {
+      res.render("signup", { isLogin: false });
+      return res.status(statusCode.CONFLICT).send(util.fail(statusCode.CONFLICT, message.EMAIL_DUPLICATED));
+    }
     const accessToken: string = jwtHandler.getAccessToken(result._id);
     const data = {
       _id: result._id,
       accessToken,
     };
 
+    res.render("home", { isLogin: true, statusCode: statusCode.CREATED, message: message.CREATE_USER_SUCCESS, data: data });
     res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, message.CREATE_USER_SUCCESS, data)); //response에 data 끼워주고!
   } catch (err) {
     console.log(err); //서버 내부에서 오류 발생.
@@ -64,6 +67,7 @@ const signinUser = async (req: Request, res: Response) => {
       _id: (result as PostBaseResponseDto)._id,
       accessToken,
     };
+    res.render("home", { isLogin: true, statusCode: statusCode.OK, message: message.SIGNIN_USER_SUCCESS, data: data });
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.SIGNIN_USER_SUCCESS, data));
   } catch (err) {
     console.log(err);
@@ -81,8 +85,10 @@ const getUser = async (req: Request, res: Response) => {
   try {
     const data = await UserService.getUser(userId);
     if (!data) {
+      res.render("needLogin", { isLogin: false });
       return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
     }
+    res.render("mypage", { isLogin: true, statusCode: statusCode.OK, message: message.READ_USER_SUCCESS, data: data });
     return res.status(statusCode.OK).send(util.success(statusCode.OK, message.READ_USER_SUCCESS, data));
   } catch (err) {
     console.log(err);
