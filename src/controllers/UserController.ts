@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import statusCode from "../modules/statusCode";
 import message from "../modules/responseMessage";
 import util from "../modules/util";
@@ -8,9 +8,7 @@ import { UserService } from "../services";
 import jwtHandler from "../modules/jwtHandler";
 import { PostBaseResponseDto } from "../interfaces/common/PostBaseResponseDto";
 import { UserSignInDto } from "../interfaces/user/UserSigninDto";
-import exceptionMessage from "../modules/exceptionMessage";
-import { JwtPayload } from "jsonwebtoken";
-import User from "../models/User";
+
 /**
  *  @route POST /user
  *  @desc Create User
@@ -34,7 +32,6 @@ const createUser = async (req: Request, res: Response) => {
       accessToken,
     };
 
-    res.cookie("token", accessToken, { httpOnly: true });
     res.render("home", { isLogin: true, statusCode: statusCode.CREATED, message: message.CREATE_USER_SUCCESS, data: data });
     res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, message.CREATE_USER_SUCCESS, data)); //response에 data 끼워주고!
   } catch (err) {
@@ -70,7 +67,6 @@ const signinUser = async (req: Request, res: Response) => {
       _id: (result as PostBaseResponseDto)._id,
       accessToken,
     };
-    res.cookie("token", accessToken, { httpOnly: true });
     res.render("home", { isLogin: true, statusCode: statusCode.OK, message: message.SIGNIN_USER_SUCCESS, data: data });
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.SIGNIN_USER_SUCCESS, data));
   } catch (err) {
@@ -100,49 +96,4 @@ const getUser = async (req: Request, res: Response) => {
   }
 };
 
-//쿠키로 auth!!
-const checkAuth = async (req: Request, res: Response, next: NextFunction) => {
-  // 공통적으로 사용되는 data
-  res.locals.user = null;
-
-  // 쿠키에서 토큰 가져오기
-  const token = req.cookies.token;
-  if (!token) {
-    // 정상적인 경우
-    if (req.url === "/" || req.url === "/api/user/signup" || req.url === "/api/user/login") return next();
-    // 비정상적인 경우
-    else return res.render("user/signin");
-  }
-
-  // token 값을 verify
-  const decoded = jwtHandler.verifyToken(token);
-
-  if (decoded === exceptionMessage.EXPIRED_TOKEN) {
-    res.clearCookie("token");
-    return res.render("signin");
-    //return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.EXPIRED_TOKEN));
-  }
-
-  if (decoded === exceptionMessage.INVALID_TOKEN) {
-    res.clearCookie("token");
-    return res.render("signin");
-    //return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.INVALID_TOKEN));
-  }
-
-  const userId = (decoded as JwtPayload).user;
-  if (!userId) {
-    return res.status(statusCode.FORBIDDEN).send(util.fail(statusCode.FORBIDDEN, message.INVALID_TOKEN));
-  }
-
-  const user = User.findById(userId.id);
-  if (!user) {
-    return res.render("signin");
-    //return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.NO_USER));
-  }
-
-  res.locals.user = user;
-
-  next();
-};
-
-export default { createUser, signinUser, getUser, checkAuth };
+export default { createUser, signinUser, getUser };
