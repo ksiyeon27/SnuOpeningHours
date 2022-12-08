@@ -1,9 +1,8 @@
 <h1>Home PAGE</h1>
-<% if (user === null) { %>
+<% if(!isLogin){ %>
 <a href="/user/signup">signup</a>
 <a href="/user/signin">login</a>
 <% } else { %>
-<div><%=user.email%>님</div>
 <a href="/user">mypage</a>
 <% } %>
 

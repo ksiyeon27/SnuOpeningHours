@@ -4,9 +4,13 @@ import { UserController } from "../controllers";
 import auth from "../middleware/auth";
 const router: Router = Router();
 
-router.get("/signup", UserController.showSignupPage);
-router.post("/signup", UserController.createUser);
-router.get("/signin", UserController.showLoginPage);
+router.get("/signup", function (req, res) {
+  res.render("signup", { isLogin: false });
+});
+router.post("/signup", [], UserController.createUser);
+router.get("/signin", function (req, res) {
+  res.render("login"), { isLogin: false };
+});
 router.post("/signin", UserController.signinUser);
 router.get("/", auth, UserController.getUser);
 

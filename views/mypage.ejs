@@ -1,8 +1,8 @@
 <h1>mypage</h1>
-<% if(user === null){ %>
-<a href="/user/signin">signin</a>
+<% if(!isLogin){ %>
+<a href="/user/signin">mypage</a>
 <% } else { %>
-<div><%= user._id %></div>
-<div><%= user.email %></div>
-<div><%= user.username %></div>
+<div><%= data._id %></div>
+<div><%= data.email %></div>
+<div><%= data.username %></div>
 <% } %>
