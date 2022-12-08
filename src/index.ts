@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import config from "./config";
+import { UserController } from "./controllers";
 const app = express();
 import connectDB from "./loaders/db";
 import routes from "./routes";
@@ -11,7 +12,9 @@ connectDB(); //몽고디비에 연결
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cookieParser);
+app.set("view engine", "ejs");
+app.use(cookieParser());
+app.use(UserController.checkAuth);
 
 app.use(routes); //라우터
 // error handler
@@ -43,5 +46,3 @@ app
     console.error(err);
     process.exit(1);
   });
-
-app.set("view engine", "ejs");

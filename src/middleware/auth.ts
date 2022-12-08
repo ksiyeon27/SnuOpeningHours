@@ -13,7 +13,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
 
   // 토큰 유무 검증
   if (!token) {
-    res.render("needLogin", { isLogin: false });
+    res.render("needLogin");
     return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.NULL_VALUE_TOKEN));
   }
 
@@ -22,12 +22,12 @@ export default (req: Request, res: Response, next: NextFunction) => {
     const decoded = jwtHandler.verifyToken(token);
 
     if (decoded === exceptionMessage.EXPIRED_TOKEN) {
-      res.render("needLogin", { isLogin: false });
+      res.render("needLogin");
       return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.EXPIRED_TOKEN));
     }
 
     if (decoded === exceptionMessage.INVALID_TOKEN) {
-      res.render("needLogin", { isLogin: false });
+      res.render("needLogin");
       return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.INVALID_TOKEN));
     }
 
@@ -38,7 +38,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
 
     const user = User.findById(userId.id);
     if (!user) {
-      res.render("needLogin", { isLogin: false });
+      res.render("needLogin");
       return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.NO_USER));
     }
 
@@ -49,7 +49,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
     console.log(err);
 
     if (err.name === "TokenExpiredError") {
-      res.render("needLogin", { isLogin: false });
+      res.render("needLogin");
       return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.INTERNAL_SERVER_ERROR));
     }
   }

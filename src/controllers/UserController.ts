@@ -11,6 +11,8 @@ import { UserSignInDto } from "../interfaces/user/UserSigninDto";
 import exceptionMessage from "../modules/exceptionMessage";
 import { JwtPayload } from "jsonwebtoken";
 import User from "../models/User";
+import { UserInfo } from "../interfaces/user/UserInfo";
+import { UserResponseDto } from "../interfaces/user/UserResponseDto";
 /**
  *  @route POST /user
  *  @desc Create User
@@ -25,7 +27,7 @@ const createUser = async (req: Request, res: Response) => {
   try {
     const result = await UserService.createUser(userCreateDto);
     if (!result) {
-      res.render("signup", { isLogin: false });
+      res.render("signup");
       return res.status(statusCode.CONFLICT).send(util.fail(statusCode.CONFLICT, message.EMAIL_DUPLICATED));
     }
     const accessToken: string = jwtHandler.getAccessToken(result._id);
@@ -33,9 +35,8 @@ const createUser = async (req: Request, res: Response) => {
       _id: result._id,
       accessToken,
     };
-
     res.cookie("token", accessToken, { httpOnly: true });
-    res.render("home", { isLogin: true, statusCode: statusCode.CREATED, message: message.CREATE_USER_SUCCESS, data: data });
+    res.render("home", { statusCode: statusCode.CREATED, message: message.CREATE_USER_SUCCESS, data: data });
     res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, message.CREATE_USER_SUCCESS, data)); //response에 data 끼워주고!
   } catch (err) {
     console.log(err); //서버 내부에서 오류 발생.
@@ -71,7 +72,7 @@ const signinUser = async (req: Request, res: Response) => {
       accessToken,
     };
     res.cookie("token", accessToken, { httpOnly: true });
-    res.render("home", { isLogin: true, statusCode: statusCode.OK, message: message.SIGNIN_USER_SUCCESS, data: data });
+    res.render("home", { statusCode: statusCode.OK, message: message.SIGNIN_USER_SUCCESS, data: data });
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.SIGNIN_USER_SUCCESS, data));
   } catch (err) {
     console.log(err);
@@ -84,15 +85,19 @@ const signinUser = async (req: Request, res: Response) => {
  *  @desc READ User
  *  @access Public
  */
-const getUser = async (req: Request, res: Response) => {
+const getUser = async (req: any, res: any) => {
   const userId = req.body.user.id;
+  if (userId === undefined) {
+    console.log("userId is undefined");
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  }
   try {
     const data = await UserService.getUser(userId);
     if (!data) {
-      res.render("needLogin", { isLogin: false });
+      res.render("needLogin");
       return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
     }
-    res.render("mypage", { isLogin: true, statusCode: statusCode.OK, message: message.READ_USER_SUCCESS, data: data });
+    res.render("mypage", { statusCode: statusCode.OK, message: message.READ_USER_SUCCESS, data: data });
     return res.status(statusCode.OK).send(util.success(statusCode.OK, message.READ_USER_SUCCESS, data));
   } catch (err) {
     console.log(err);
@@ -108,10 +113,10 @@ const checkAuth = async (req: Request, res: Response, next: NextFunction) => {
   // 쿠키에서 토큰 가져오기
   const token = req.cookies.token;
   if (!token) {
-    // 정상적인 경우
-    if (req.url === "/" || req.url === "/api/user/signup" || req.url === "/api/user/login") return next();
     // 비정상적인 경우
-    else return res.render("user/signin");
+    if (req.url === "/user" || req.url === "/report" || req.url === "/report/user") return res.render("login");
+    // 정상적인 경우
+    else return next();
   }
 
   // token 값을 verify
@@ -119,13 +124,13 @@ const checkAuth = async (req: Request, res: Response, next: NextFunction) => {
 
   if (decoded === exceptionMessage.EXPIRED_TOKEN) {
     res.clearCookie("token");
-    return res.render("signin");
+    return res.render("login");
     //return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.EXPIRED_TOKEN));
   }
 
   if (decoded === exceptionMessage.INVALID_TOKEN) {
     res.clearCookie("token");
-    return res.render("signin");
+    return res.render("login");
     //return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.INVALID_TOKEN));
   }
 
@@ -136,7 +141,7 @@ const checkAuth = async (req: Request, res: Response, next: NextFunction) => {
 
   const user = User.findById(userId.id);
   if (!user) {
-    return res.render("signin");
+    return res.render("login");
     //return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.NO_USER));
   }
 
@@ -145,4 +150,11 @@ const checkAuth = async (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-export default { createUser, signinUser, getUser, checkAuth };
+const showLoginPage = (req: Request, res: Response) => {
+  res.render("login");
+};
+
+const showSignupPage = (req: Request, res: Response) => {
+  res.render("signup");
+};
+export default { showLoginPage, showSignupPage, createUser, signinUser, getUser, checkAuth };
