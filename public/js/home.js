@@ -85,46 +85,4 @@ $(document).ready(function () {
       },
     });
   }); //signup
-
-  // function goHome(callback) {
-  //   $.ajax({
-  //     type: "get",
-  //     url: "/",
-  //     headers: {
-  //       Authorization: localStorage.getItem("token"),
-  //     },
-  //     success: function (data) {
-  //       callback(data);
-  //     },
-  //     error: function (e) {
-  //       console.error(e.responseText);
-  //     },
-  //   });
-  // }
-  //   function onTrip(callback) {
-  //     $.ajax({
-  //       type: "get",
-  //       url: "/api/trips/onTrip",
-  //       headers: {
-  //         "x-auth-token": localStorage.getItem("token"),
-  //       },
-  //       success: function (data) {
-  //         callback(data);
-  //       },
-  //       error: function (e) {
-  //         console.error(e.responseText);
-  //       },
-  //     });
-  //   }
-
-  //   function routeIfOnTrip(onTripData) {
-  //     if (onTripData.onTrip) {
-  //       console.log("current Trip");
-  //       localStorage.setItem("currentTripID", onTripData.tripID);
-  //       location.href = "/current";
-  //     } else {
-  //       console.log("alltrips");
-  //       location.href = "/alltrips";
-  //     }
-  //   }
 });

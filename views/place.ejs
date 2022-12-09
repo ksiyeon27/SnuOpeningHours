@@ -1,7 +1,41 @@
-<div><%= data.category %></div>
-<div><%= data.name %></div>
-<div><%= data.location %></div>
-<div><%= data.isClosed %></div>
-<div><%= data.dayOff %></div>
-<div><%= data.openTime %></div>
-<div><%= data.closeTime %></div>
+<!DOCTYPE html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="/public/js/report.js" type="text/javascript"></script>
+</head>
+<body>
+  <a href="/"><h1>Home PAGE</h1></a>
+  <div id="placeInfoMoment">
+    <div id="placeId"><%= data._id %></div>
+    <div><%= data.category %></div>
+    <div><%= data.name %></div>
+    <div><%= data.location %></div>
+    <div><%= data.isClosed %></div>
+    <div><%= data.dayOff %></div>
+    <div><%= data.openTime %></div>
+    <div><%= data.closeTime %></div>
+  </div>
+
+  <div id="wantToReportMoment">
+    <button id="buttonReport" class="btn yellow darken-2">장소 관련 제보하기</button>
+  </div>
+
+  <!--report post page.-->
+  <div id="reportPostMoment">
+    <form name="form-data">
+      <div class="row marginForWelcome">
+        <div class="input-field col s6 marginForWelcome">
+          <label for="content">content</label>
+          <input type="text" id="content" required="required" />
+        </div>
+        <div class="input-field col s6 marginForWelcome">
+          <label for="place">place</label>
+          <input type="text" id="place" required="required" value="" />
+        </div>
+      </div>
+
+      <button type="submit" id="reported" class="btn yellow darken-2 floatRight">제보하기</button>
+    </form>
+    <button id="back" class="btn yellow darken-2 floatRight">취소하기</button>
+  </div>
+</body>
