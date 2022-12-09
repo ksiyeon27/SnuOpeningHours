@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <head>
+  <%- include ('./head') %>
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="/public/js/mypage.js" type="text/javascript"></script>
 </head>
 
 <body>
   <header><% include ("header.ejs") %></header>
-  <a href="/"><h1>Home PAGE</h1></a>
+  <a href="/"><h1>몇 시까지 하샤</h1></a>
+  <div class="col-md-12 mb-4">
+    <button type="button" class="btn mb-2 mb-md-0 btn-fb">
+      <a href="/"> <i class="ion-md-home"></i></a>
+    </button>
+  </div>
   <main class="container">
     <div id="profileDisplay" class="yellow-text">
       <div>userName:</div>
