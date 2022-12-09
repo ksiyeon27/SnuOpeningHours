@@ -1,13 +1,20 @@
-<div><%= data.placesCount %> 개의 장소가 있습니다.</div>
+<!DOCTYPE html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+</head>
+<body>
+  <a href="/"><h1>Home PAGE</h1></a>
+  <div><%= data.placesCount %> 개의 장소가 있습니다.</div>
 
-<% if (data) { %> <% for(var i = 0; i < data.placesCount ; i++){ %>
-<div><a href="/place/<%= data.places[i]._id %>">상세보기</a></div>
-<div><%= data.places[i].name %></div>
-<div><%= data.places[i].location %></div>
-<div><%= data.places[i].isClosed %></div>
-<div><%= data.places[i].dayOff %></div>
-<div><%= data.places[i].openTime %></div>
-<div><%= data.places[i].closeTime %></div>
-<% } %> <% }else{ %>
-<div>aa</div>
-<% } %>
+  <% if (data) { %> <% for(var i = 0; i < data.placesCount ; i++){ %>
+  <div><a href="/place/<%= data.places[i]._id %>">상세보기</a></div>
+  <div><%= data.places[i].name %></div>
+  <div><%= data.places[i].location %></div>
+  <div><%= data.places[i].isClosed %></div>
+  <div><%= data.places[i].dayOff %></div>
+  <div><%= data.places[i].openTime %></div>
+  <div><%= data.places[i].closeTime %></div>
+  <% } %> <% }else{ %>
+  <div>aa</div>
+  <% } %>
+</body>
