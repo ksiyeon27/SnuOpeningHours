@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "tsc": "tsc",
     "clean": "rimraf dist/*",
     "copy-assets": "ts-node copyAssets",
     "dev": "nodemon",
