@@ -20,6 +20,8 @@
   },
   "include": [
     "./src/**/*", // build 시 포함
+    "./public",
+    "./views",
     "public"
   ],
   "exclude": [
