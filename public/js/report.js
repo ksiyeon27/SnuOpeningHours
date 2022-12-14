@@ -23,7 +23,7 @@ $(document).ready(function () {
       url: "/report",
       dataType: "json",
       data: {
-        place: $("#place").val(),
+        place: document.getElementById("placeId").innerText,
         content: $("#content").val(),
       },
       success: function (data) {
