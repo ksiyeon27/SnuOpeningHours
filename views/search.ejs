@@ -47,26 +47,27 @@
     <button type="button" class="btn mb-2 mb-md-0 btn-fb"><a class=" text-white" href="/place/<%= data.places[i]._id %>">상세보기</a></button>
   <div>장소: <%= data.places[i].name %></div>
   <div>위치: <%= data.places[i].location %></div>
+
   <% if (data.places[i].isClosed) { %>
   <div>현재 휴무 중</div>
   <% } %>
-  <div>휴무일:</div>
+  <span>휴무일: </span>
   <% if (data.places[i].dayOff.includes(0)) { %>
-  <div>월요일</div>
+  <span>월요일</span>
   <% } %> <% if (data.places[i].dayOff.includes(1)) { %>
-  <div>화요일</div>
+  <span>화요일</span>
   <% } %> <% if (data.places[i].dayOff.includes(2)) { %>
-  <div>수요일</div>
+  <span>수요일</span>
   <% } %> <% if (data.places[i].dayOff.includes(3)) { %>
-  <div>목요일</div>
+  <span>목요일</span>
   <% } %> <% if (data.places[i].dayOff.includes(4)) { %>
-  <div>금요일</div>
+  <span>금요일</span>
   <% } %> <% if (data.places[i].dayOff.includes(5)) { %>
-  <div>토요일</div>
+  <span>토요일</span>
   <% } %> <% if (data.places[i].dayOff.includes(6)) { %>
-  <div>일요일</div>
+  <span>일요일</span>
   <% } %> <% if (data.places[i].dayOff.includes(7)) { %>
-  <div>휴일</div>
+  <span>휴일</span>
   <% } %>
 
   <div>운영시간</div>
