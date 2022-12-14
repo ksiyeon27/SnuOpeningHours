@@ -15,26 +15,28 @@
     <div id="placeId"><%= data._id %></div>
     <div>장소: <%= data.name %></div>
     <div>위치: <%= data.location %></div>
-    <% if (data.isClosed) { %>
+    <% if (data.description != null) { %>
+    <div>설명: <%= data.description %></div>
+    <% } %> <% if (data.isClosed) { %>
     <div>현재 휴무 중</div>
     <% } %>
-    <div>휴무일:</div>
+    <span>휴무일: </span>
     <% if (data.dayOff.includes(0)) { %>
-    <div>월요일</div>
+    <span>월요일</span>
     <% } %> <% if (data.dayOff.includes(1)) { %>
-    <div>화요일</div>
+    <span>화요일</span>
     <% } %> <% if (data.dayOff.includes(2)) { %>
-    <div>수요일</div>
+    <span>수요일</span>
     <% } %> <% if (data.dayOff.includes(3)) { %>
-    <div>목요일</div>
+    <span>목요일</span>
     <% } %> <% if (data.dayOff.includes(4)) { %>
-    <div>금요일</div>
+    <span>금요일</span>
     <% } %> <% if (data.dayOff.includes(5)) { %>
-    <div>토요일</div>
+    <span>토요일</span>
     <% } %> <% if (data.dayOff.includes(6)) { %>
-    <div>일요일</div>
+    <span>일요일</span>
     <% } %> <% if (data.dayOff.includes(7)) { %>
-    <div>휴일</div>
+    <span>휴일</span>
     <% } %>
 
     <div>운영시간</div>
