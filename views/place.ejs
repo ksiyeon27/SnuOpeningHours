@@ -12,7 +12,7 @@
     </button>
   </div>
   <div id="placeInfoMoment">
-    <div id="placeId"><%= data._id %></div>
+    <div id="placeId" class="text-white"><%= data._id %></div>
     <div>장소: <%= data.name %></div>
     <div>위치: <%= data.location %></div>
     <% if (data.description != null) { %>
@@ -20,6 +20,7 @@
     <% } %> <% if (data.isClosed) { %>
     <div>현재 휴무 중</div>
     <% } %>
+    <br />
     <span>휴무일: </span>
     <% if (data.dayOff.includes(0)) { %>
     <span>월요일</span>
@@ -41,10 +42,10 @@
 
     <div>운영시간</div>
     <% for(var j = 0; j < data.openTime.length ; j++){ %>
-    <div><%= data.openTime[j] %> ~ <%= data.closeTime[j] %></div>
+    <div>&nbsp;&nbsp; <%= data.openTime[j] %> ~ <%= data.closeTime[j] %></div>
     <% } %>
   </div>
-
+  <br />
   <div id="wantToReportMoment">
     <button id="buttonReport" class="btn yellow darken-2">장소 관련 제보하기</button>
   </div>
@@ -56,10 +57,6 @@
         <div class="input-field col s6 marginForWelcome">
           <label for="content">content</label>
           <input type="text" id="content" required="required" />
-        </div>
-        <div class="input-field col s6 marginForWelcome">
-          <label for="place">place</label>
-          <input type="text" id="place" required="required" value="" />
         </div>
       </div>
 
