@@ -1,3 +1,4 @@
+var user;
 $(document).ready(function () {
   $("#reportPostMoment").hide();
   // setting encrypted and secure user token
@@ -15,9 +16,24 @@ $(document).ready(function () {
     $("#wantToReportMoment").show();
     $("#reportPostMoment").hide();
   });
+  $.ajax({
+    type: "get",
+    url: "/user",
+    success: function (res) {
+      console.log(res.data);
+      user = res.data;
+    },
+    error: function (e) {
+      console.log(e.responseText);
+      callback("Unknown");
+    },
+  });
 
   $("#reported").on("click", function (e) {
     e.preventDefault();
+    if (user == undefined) {
+      alert("로그인이 필요합니다.");
+    }
     $.ajax({
       type: "post",
       url: "/report",
@@ -29,7 +45,7 @@ $(document).ready(function () {
       success: function (data) {
         console.log(data.token);
         console.log(data);
-        alert("제보가 전송되었습니다. 감사합니다:)");
+        alert(user.username + "님, 제보가 전송되었습니다. 감사합니다:)");
         $("#wantToReportMoment").show();
         $("#reportPostMoment").hide();
       },
