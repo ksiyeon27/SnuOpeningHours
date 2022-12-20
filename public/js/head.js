@@ -3,12 +3,12 @@ $(document).ready(function () {
   $("#signUpMoment").hide();
   $("#buttonIn").click(function () {
     $("#welcomeMoment").hide();
-    $("#homeMoment").hide();
+    $("#container").hide();
     $("#signInMoment").show();
   });
   $("#buttonUp").click(function () {
     $("#welcomeMoment").hide();
-    $("#homeMoment").hide();
+    $("#container").hide();
     $("#signUpMoment").show();
   });
   $("#buttonUp1").click(function () {
@@ -20,14 +20,14 @@ $(document).ready(function () {
   $("#backToWelcom1").click(function () {
     //signin->home
     $("#welcomeMoment").show();
-    $("#homeMoment").show();
+    $("#container").show();
     $("#signInMoment").hide();
   });
 
   $("#backToWelcom2").click(function () {
     //signup->home
     $("#welcomeMoment").show();
-    $("#homeMoment").show();
+    $("#container").show();
     $("#signUpMoment").hide();
   });
 
@@ -47,12 +47,19 @@ $(document).ready(function () {
         console.log(res.data.accessToken);
         localStorage.setItem("token", res.data.accessToken);
         $("#welcomeMoment").hide();
-        $("#homeMoment").show();
+        $("#container").show();
         $("#signInMoment").hide();
       },
       error: function (e) {
-        console.log(e.responseText);
-        alert(e.responseText);
+        console.log(e.responseText.message);
+        var result = JSON.parse(e.responseText);
+        if (result.message === "비밀번호 오류") {
+          alert("비밀번호가 틀렸습니다. 다시 시도해주세요.");
+        } else if (result.message === "존재하지 않는 자원") {
+          alert("해당 이메일은 계정이 없습니다. 다시 시도해주세요.");
+        } else {
+          alert(e.responseText);
+        }
       },
     });
   }); //signin
@@ -81,7 +88,12 @@ $(document).ready(function () {
       },
       error: function (e) {
         console.log(e.responseText);
-        alert(e.responseText);
+        var result = JSON.parse(e.responseText);
+        if (result.message === "이메일 중복") {
+          alert("이미 계정이 존재하는 이메일입니다.");
+        } else {
+          alert(e.responseText);
+        }
       },
     });
   }); //signup

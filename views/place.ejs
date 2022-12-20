@@ -5,63 +5,59 @@
   <script src="/public/js/report.js" type="text/javascript"></script>
 </head>
 <body>
-  <a href="/"><h1>몇 시까지 하샤</h1></a>
-  <div class="col-md-12 mb-4">
-    <button type="button" class="btn mb-2 mb-md-0 btn-fb">
-      <a href="/"> <i class="ion-md-home"></i></a>
-    </button>
-  </div>
-  <div id="placeInfoMoment">
-    <div id="placeId" class="text-white"><%= data._id %></div>
-    <div>장소: <%= data.name %></div>
-    <div>위치: <%= data.location %></div>
-    <% if (data.description != null) { %>
-    <div>설명: <%= data.description %></div>
-    <% } %> <% if (data.isClosed) { %>
-    <div>현재 휴무 중</div>
-    <% } %>
+  <main id="container">
+    <div id="placeInfoMoment">
+      <div id="placeId" class="text-white"><%= data._id %></div>
+      <div>장소: <%= data.name %></div>
+      <div>위치: <%= data.location %></div>
+      <% if (data.description != null) { %>
+      <div>설명: <%= data.description %></div>
+      <% } %> <% if (data.isClosed) { %>
+      <div>현재 휴무 중</div>
+      <% } %>
+      <br />
+      <span>휴무일: </span>
+      <% if (data.dayOff.includes(0)) { %>
+      <span>월요일</span>
+      <% } %> <% if (data.dayOff.includes(1)) { %>
+      <span>화요일</span>
+      <% } %> <% if (data.dayOff.includes(2)) { %>
+      <span>수요일</span>
+      <% } %> <% if (data.dayOff.includes(3)) { %>
+      <span>목요일</span>
+      <% } %> <% if (data.dayOff.includes(4)) { %>
+      <span>금요일</span>
+      <% } %> <% if (data.dayOff.includes(5)) { %>
+      <span>토요일</span>
+      <% } %> <% if (data.dayOff.includes(6)) { %>
+      <span>일요일</span>
+      <% } %> <% if (data.dayOff.includes(7)) { %>
+      <span>휴일</span>
+      <% } %>
+
+      <div>운영시간</div>
+      <% for(var j = 0; j < data.openTime.length ; j++){ %>
+      <div>&nbsp;&nbsp; <%= data.openTime[j] %> ~ <%= data.closeTime[j] %></div>
+      <% } %>
+    </div>
     <br />
-    <span>휴무일: </span>
-    <% if (data.dayOff.includes(0)) { %>
-    <span>월요일</span>
-    <% } %> <% if (data.dayOff.includes(1)) { %>
-    <span>화요일</span>
-    <% } %> <% if (data.dayOff.includes(2)) { %>
-    <span>수요일</span>
-    <% } %> <% if (data.dayOff.includes(3)) { %>
-    <span>목요일</span>
-    <% } %> <% if (data.dayOff.includes(4)) { %>
-    <span>금요일</span>
-    <% } %> <% if (data.dayOff.includes(5)) { %>
-    <span>토요일</span>
-    <% } %> <% if (data.dayOff.includes(6)) { %>
-    <span>일요일</span>
-    <% } %> <% if (data.dayOff.includes(7)) { %>
-    <span>휴일</span>
-    <% } %>
+    <div id="wantToReportMoment">
+      <button id="buttonReport" class="btn yellow darken-2">장소 관련 제보하기</button>
+    </div>
 
-    <div>운영시간</div>
-    <% for(var j = 0; j < data.openTime.length ; j++){ %>
-    <div>&nbsp;&nbsp; <%= data.openTime[j] %> ~ <%= data.closeTime[j] %></div>
-    <% } %>
-  </div>
-  <br />
-  <div id="wantToReportMoment">
-    <button id="buttonReport" class="btn yellow darken-2">장소 관련 제보하기</button>
-  </div>
-
-  <!--report post page.-->
-  <div id="reportPostMoment">
-    <form name="form-data">
-      <div class="row marginForWelcome">
-        <div class="input-field col s6 marginForWelcome">
-          <label for="content">content</label>
-          <input type="text" id="content" required="required" />
+    <!--report post page.-->
+    <div id="reportPostMoment">
+      <form name="form-data">
+        <div class="row marginForWelcome">
+          <div class="input-field col s6 marginForWelcome">
+            <label for="content">content</label>
+            <input type="text" id="content" required="required" />
+          </div>
         </div>
-      </div>
 
-      <button type="submit" id="reported" class="btn yellow darken-2 floatRight">제보하기</button>
-    </form>
-    <button id="back" class="btn yellow darken-2 floatRight">취소하기</button>
-  </div>
+        <button type="submit" id="reported" class="btn yellow darken-2 floatRight">제보하기</button>
+      </form>
+      <button id="back" class="btn yellow darken-2 floatRight">취소하기</button>
+    </div>
+  </main>
 </body>

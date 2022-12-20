@@ -4,49 +4,45 @@
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 </head>
 <body>
-  <a href="/"><h1>몇 시까지 하샤</h1></a>
-  <div class="col-md-12 mb-4">
-    <button type="button" class="btn mb-2 mb-md-0 btn-fb">
-      <a href="/"> <i class="ion-md-home"></i></a>
-    </button>
-  </div>
-  <div><%= data.placesCount %> 개의 장소가 있습니다.</div>
+  <main id="container">
+    <div><%= data.placesCount %> 개의 장소가 있습니다.</div>
 
-  <% if (data) { %> <% for(var i = 0; i < data.placesCount ; i++){ %>
-  <div class="one-place-detail">
-    <button type="button" class="btn mb-2 mb-md-0 btn-fb">
-      <a class="text-white" href="/place/<%= data.places[i]._id %>">상세보기</a>
-    </button>
-    <div>장소: <%= data.places[i].name %></div>
-    <div>위치: <%= data.places[i].location %></div>
-    <% if (data.places[i].isClosed) { %>
-    <div>현재 휴무 중</div>
-    <% } %>
-    <span>휴무일: </span>
-    <% if (data.places[i].dayOff.includes(0)) { %>
-    <span>월요일</span>
-    <% } %> <% if (data.places[i].dayOff.includes(1)) { %>
-    <span>화요일</span>
-    <% } %> <% if (data.places[i].dayOff.includes(2)) { %>
-    <span>수요일</span>
-    <% } %> <% if (data.places[i].dayOff.includes(3)) { %>
-    <span>목요일</span>
-    <% } %> <% if (data.places[i].dayOff.includes(4)) { %>
-    <span>금요일</span>
-    <% } %> <% if (data.places[i].dayOff.includes(5)) { %>
-    <span>토요일</span>
-    <% } %> <% if (data.places[i].dayOff.includes(6)) { %>
-    <span>일요일</span>
-    <% } %> <% if (data.places[i].dayOff.includes(7)) { %>
-    <span>휴일</span>
-    <% } %>
+    <% if (data) { %> <% for(var i = 0; i < data.placesCount ; i++){ %>
+    <div class="one-place-detail">
+      <button type="button" class="btn mb-2 mb-md-0 btn-fb">
+        <a class="text-white" href="/place/<%= data.places[i]._id %>">상세보기</a>
+      </button>
+      <div>장소: <%= data.places[i].name %></div>
+      <div>위치: <%= data.places[i].location %></div>
+      <% if (data.places[i].isClosed) { %>
+      <div>현재 휴무 중</div>
+      <% } %>
+      <span>휴무일: </span>
+      <% if (data.places[i].dayOff.includes(0)) { %>
+      <span>월요일</span>
+      <% } %> <% if (data.places[i].dayOff.includes(1)) { %>
+      <span>화요일</span>
+      <% } %> <% if (data.places[i].dayOff.includes(2)) { %>
+      <span>수요일</span>
+      <% } %> <% if (data.places[i].dayOff.includes(3)) { %>
+      <span>목요일</span>
+      <% } %> <% if (data.places[i].dayOff.includes(4)) { %>
+      <span>금요일</span>
+      <% } %> <% if (data.places[i].dayOff.includes(5)) { %>
+      <span>토요일</span>
+      <% } %> <% if (data.places[i].dayOff.includes(6)) { %>
+      <span>일요일</span>
+      <% } %> <% if (data.places[i].dayOff.includes(7)) { %>
+      <span>휴일</span>
+      <% } %>
 
-    <div>운영시간</div>
-    <% for(var j = 0; j < data.places[i].openTime.length ; j++){ %>
-    <div><%= data.places[i].openTime[j] %> ~ <%= data.places[i].closeTime[j] %></div>
+      <div>운영시간</div>
+      <% for(var j = 0; j < data.places[i].openTime.length ; j++){ %>
+      <div><%= data.places[i].openTime[j] %> ~ <%= data.places[i].closeTime[j] %></div>
+      <% } %>
+    </div>
+    <% } %> <% }else{ %>
+    <div>aa</div>
     <% } %>
-  </div>
-  <% } %> <% }else{ %>
-  <div>aa</div>
-  <% } %>
+  </main>
 </body>

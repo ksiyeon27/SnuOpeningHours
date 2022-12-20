@@ -31,9 +31,9 @@ $(document).ready(function () {
 
   $("#reported").on("click", function (e) {
     e.preventDefault();
-    if (user == undefined) {
-      alert("로그인이 필요합니다.");
-    }
+    // if (user == undefined) {
+    //   alert("로그인이 필요합니다.");
+    // }
     $.ajax({
       type: "post",
       url: "/report",
@@ -51,7 +51,12 @@ $(document).ready(function () {
       },
       error: function (e) {
         console.log(e.responseText);
-        alert(e.responseText);
+        var result = JSON.parse(e.responseText);
+        if (result.status === 401) {
+          alert("로그인이 필요합니다.");
+        } else {
+          alert(e.responseText);
+        }
       },
     });
   }); //signup
