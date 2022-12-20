@@ -17,7 +17,9 @@
       <% } %>
       <br />
       <span>휴무일: </span>
-      <% if (data.dayOff.includes(0)) { %>
+      <% if (data.dayOff.length == 0) { %>
+      <span>없음</span>
+      <% } %> <% if (data.dayOff.includes(0)) { %>
       <span>월요일</span>
       <% } %> <% if (data.dayOff.includes(1)) { %>
       <span>화요일</span>
@@ -32,7 +34,7 @@
       <% } %> <% if (data.dayOff.includes(6)) { %>
       <span>일요일</span>
       <% } %> <% if (data.dayOff.includes(7)) { %>
-      <span>휴일</span>
+      <span>공휴일</span>
       <% } %>
 
       <div>운영시간</div>

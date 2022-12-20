@@ -45,6 +45,9 @@
     <div>현재 휴무 중</div>
     <% } %>
     <span>휴무일: </span>
+    <% if (data.places[i].dayOff.length == 0) { %>
+      <span>없음</span>
+    <% } %>
     <% if (data.places[i].dayOff.includes(0)) { %>
     <span>월요일</span>
     <% } %> <% if (data.places[i].dayOff.includes(1)) { %>
@@ -60,7 +63,7 @@
     <% } %> <% if (data.places[i].dayOff.includes(6)) { %>
     <span>일요일</span>
     <% } %> <% if (data.places[i].dayOff.includes(7)) { %>
-    <span>휴일</span>
+    <span>공휴일</span>
     <% } %>
   
     <div>운영시간</div>
