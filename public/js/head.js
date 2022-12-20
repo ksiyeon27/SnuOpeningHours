@@ -1,6 +1,27 @@
+var isLogin = false;
 $(document).ready(function () {
+  const status = localStorage.getItem("token");
+  if (status === null) {
+    isLogin = false;
+  } else {
+    isLogin = true;
+  }
   $("#signInMoment").hide();
   $("#signUpMoment").hide();
+  if (isLogin) {
+    $("#welcomeMoment").hide();
+  } else {
+    $("#userMoment").hide();
+  }
+  $("#buttonOut").on("click", function (e) {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    const status = localStorage.getItem("token");
+    console.log(status);
+    isLogin = false;
+    location.reload();
+  });
+
   $("#buttonIn").click(function () {
     $("#welcomeMoment").hide();
     $("#container").hide();
@@ -46,9 +67,10 @@ $(document).ready(function () {
       success: function (res) {
         console.log(res.data.accessToken);
         localStorage.setItem("token", res.data.accessToken);
-        $("#welcomeMoment").hide();
         $("#container").show();
+        $("#userMoment").show();
         $("#signInMoment").hide();
+        location.reload();
       },
       error: function (e) {
         console.log(e.responseText.message);
