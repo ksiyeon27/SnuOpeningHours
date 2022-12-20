@@ -4,15 +4,15 @@
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 </head>
 <body>
-  <main id="container">
+  <main id="container" class="categoryList">
     <div><%= data.placesCount %> 개의 장소가 있습니다.</div>
 
     <% if (data) { %> <% for(var i = 0; i < data.placesCount ; i++){ %>
     <div class="one-place-detail">
-      <button type="button" class="btn mb-2 mb-md-0 btn-fb">
+      <button type="button" class="btn-rad mb-2 mb-md-0 btn-fb">
         <a class="text-white" href="/place/<%= data.places[i]._id %>">상세보기</a>
       </button>
-      <div>장소: <%= data.places[i].name %></div>
+      <div class="placename">장소: <%= data.places[i].name %></div>
       <div>위치: <%= data.places[i].location %></div>
       <% if (data.places[i].isClosed) { %>
       <div>현재 휴무 중</div>
@@ -40,7 +40,7 @@
 
       <div>운영시간</div>
       <% for(var j = 0; j < data.places[i].openTime.length ; j++){ %>
-      <div><%= data.places[i].openTime[j] %> ~ <%= data.places[i].closeTime[j] %></div>
+      <div class="openclose"><%= data.places[i].openTime[j] %> ~ <%= data.places[i].closeTime[j] %></div>
       <% } %>
     </div>
     <% } %> <% }else{ %>

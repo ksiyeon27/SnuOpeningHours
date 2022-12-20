@@ -3,20 +3,27 @@
   <%- include ('./head') %>
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="/public/js/report.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/public/css/search.css" />
 </head>
 <body>
   <main id="container">
     <div>
-      <h1>search</h1>
+      <h1>검색으로 장소 찾기</h1>
       <div class="s006">
         <form>
           <fieldset>
-            <legend>영업시간을 찾으시는 장소가 어딘가요?</legend>
+            <legend class="text-black">영업시간을 찾으시는 장소가 어딘가요?</legend>
             <div class="inner-form">
               <div class="input-field">
                 <form action="/place/search" method="GET">
-                  <input name="keyword" id="search" type="text" placeholder="검색어를 입력하세요" value=""></input>
-                  <input class="btn-search" type="submit"></input>
+                  <input name="keyword" class="bgcol" id="search" type="text" placeholder="검색어를 입력하세요" value=""></input>
+                  <input class="btn-search" type="submit" value="검색">
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                      <path
+                        d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                      ></path>
+                    </svg> -->
+                  </input>
                 </form>
               </div>
             </div>
@@ -30,6 +37,7 @@
   
       </div>
   </div>
+  <div class="searchList">
   <% if (data.placesCount > 0) { %>
       <div><%= data.placesCount %> 개의 검색 결과가 있습니다. </div>
   <% }else{ %>
@@ -37,8 +45,8 @@
   <% } %> 
   <% if (data) { %> <% for(var i = 0; i < data.placesCount ; i++){ %>
     <div class="one-place-detail">
-      <button type="button" class="btn mb-2 mb-md-0 btn-fb"><a class=" text-white" href="/place/<%= data.places[i]._id %>">상세보기</a></button>
-    <div>장소: <%= data.places[i].name %></div>
+      <button type="button" class="btn-rad mb-2 mb-md-0 btn-fb"><a class=" text-white" href="/place/<%= data.places[i]._id %>">상세보기</a></button>
+    <div class="placename">장소: <%= data.places[i].name %></div>
     <div>위치: <%= data.places[i].location %></div>
   
     <% if (data.places[i].isClosed) { %>
@@ -68,12 +76,12 @@
   
     <div>운영시간</div>
     <% for(var j = 0; j < data.places[i].openTime.length ; j++){ %>
-    <div><%= data.places[i].openTime[j] %> ~ <%= data.places[i].closeTime[j] %></div>
+    <div class="openclose"><%= data.places[i].openTime[j] %> ~ <%= data.places[i].closeTime[j] %></div>
     <% } %> </div><% } %> 
     <% }else{ %>
     <div>aa</div>
     <% } %>
-  
+  </div>
   
   </main>
 
