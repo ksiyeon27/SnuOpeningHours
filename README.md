@@ -13,6 +13,6 @@
 ### 에러 해결 정리
 <img width="564" alt="스크린샷 2022-12-15 오전 5 35 04" src="https://user-images.githubusercontent.com/76062959/207708358-00bf350d-1232-4564-ae4c-c5640973d231.png">  
 
-## Git
-- Issues
-- Pull Requests
+## Github
+- [Issues](https://github.com/ksiyeon27/SnuOpeningHours/issues?q=is%3Aissue+is%3Aclosed)
+- [Pull Requests](https://github.com/ksiyeon27/SnuOpeningHours/pulls?q=is%3Apr+is%3Aclosed)
