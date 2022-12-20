@@ -3,12 +3,12 @@ $(document).ready(function () {
   $("#signUpMoment").hide();
   $("#buttonIn").click(function () {
     $("#welcomeMoment").hide();
-    $("#homeMoment").hide();
+    $("#container").hide();
     $("#signInMoment").show();
   });
   $("#buttonUp").click(function () {
     $("#welcomeMoment").hide();
-    $("#homeMoment").hide();
+    $("#container").hide();
     $("#signUpMoment").show();
   });
   $("#buttonUp1").click(function () {
@@ -20,14 +20,14 @@ $(document).ready(function () {
   $("#backToWelcom1").click(function () {
     //signin->home
     $("#welcomeMoment").show();
-    $("#homeMoment").show();
+    $("#container").show();
     $("#signInMoment").hide();
   });
 
   $("#backToWelcom2").click(function () {
     //signup->home
     $("#welcomeMoment").show();
-    $("#homeMoment").show();
+    $("#container").show();
     $("#signUpMoment").hide();
   });
 
@@ -47,7 +47,7 @@ $(document).ready(function () {
         console.log(res.data.accessToken);
         localStorage.setItem("token", res.data.accessToken);
         $("#welcomeMoment").hide();
-        $("#homeMoment").show();
+        $("#container").show();
         $("#signInMoment").hide();
       },
       error: function (e) {
